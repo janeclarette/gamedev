@@ -19,3 +19,6 @@ class User(BaseModel):
     disabled: bool = None
     role: Role = Role.user
     character_id: Optional[ObjectId] = None  # Add this line to include character_id
+    
+    class Config:
+            arbitrary_types_allowed = True  # Allow arbitrary types like ObjectId
