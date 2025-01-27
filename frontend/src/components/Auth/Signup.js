@@ -23,6 +23,7 @@ const Signup = () => {
     });
   };
 
+  
   const handleSignup = async (e) => {
     e.preventDefault();
     const form = new FormData();
