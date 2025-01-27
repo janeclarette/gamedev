@@ -1,4 +1,5 @@
-.login-auth-page {
+/* Updated Signup CSS */
+.signup-auth-page {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,36 +11,35 @@
   overflow: hidden;
 }
 
-.login-auth-page::before {
+.signup-auth-page::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.7); 
   z-index: 1;
   backdrop-filter: blur(3px);
 }
 
-.login-auth-container {
+.signup-auth-container {
   padding: 2rem;
   border-radius: 15px;
   text-align: center;
   max-width: 600px;
   width: 100%;
   z-index: 2;
-  
 }
 
-.login-divider {
+.signup-divider {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.4); 
   margin: 1.5rem 0;
-  width: 104%;
+  width: 100%;
 }
 
-.login-logo {
+.signup-logo {
   position: absolute;
   top: 20px; 
   left: 20px; 
@@ -49,71 +49,67 @@
   z-index: 2; 
 }
 
-.login-title {
+.signup-title {
   font-size: 2rem;
   margin-bottom: 0.5rem;
   color: #ffffff;
 }
 
-.login-subtitle {
+.signup-subtitle {
   margin-bottom: 1.5rem;
   font-size: 1rem;
   color: rgba(255, 255, 255, 0.8);
 }
 
-.login-form {
+.signup-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2.5rem;
+  gap: 1rem;
 }
 
-.login-form label {
+.signup-form label {
   grid-column: span 2;
   text-align: left;
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
 }
 
-.login-input-container {
+.signup-input-container {
   display: flex;
   align-items: center;
   background: rgba(255, 255, 255, 0.4);
   padding: 0.8rem;
   border-radius: 5px;
   margin-bottom: 1rem;
-  width: 100%;
 }
 
-.login-input-container input {
+.signup-input-container input {
   border: none;
   background: transparent;
   outline: none;
   color: white;
   flex: 1;
   padding: 0.5rem;
-  
 }
 
-.login-input-icon {
+.signup-input-icon {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.login-form input {
+.signup-form input {
   padding: 0.5rem;
   border: none;
   border-radius: 5px;
   opacity: 0.9;
   color: #ffffff;
   width: 100%;
-  
-  
 }
 
-.login-form input::placeholder {
+.signup-form input::placeholder {
   color: rgba(255, 255, 255, 0.9);
 }
 
-.login-auth-btn {
+.signup-auth-btn {
   grid-column: span 2;
   padding: 0.8rem;
   background-color: #3b93aa;
@@ -124,43 +120,41 @@
   font-size: 1rem;
   margin-bottom: 1rem;
   transition: background-color 0.3s ease;
-  width: 60%;
-  margin-left: 20%;
+  width: 100%;
 }
 
-.login-auth-btn:hover {
+.signup-auth-btn:hover {
   background-color: #0056b3;
 }
 
-.login-social-login {
+.signup-social-login {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   grid-column: span 2;
 }
 
-.login-social-login button {
+.signup-social-login button {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  width: 100%;
   padding: 0.8rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  width: 60%;
-  margin-left: 20%;
 }
 
-.login-google-btn {
+.signup-google-btn {
   background: rgba(255, 255, 255, 0.5);
   color: white;
   display: flex;
   align-items: center;
 }
 
-.login-facebook-btn {
+.signup-facebook-btn {
   background: rgba(255, 255, 255, 0.5);
   color: white;
   display: flex;
