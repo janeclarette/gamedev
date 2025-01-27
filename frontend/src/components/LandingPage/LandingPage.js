@@ -1,53 +1,40 @@
 import React from "react";
-import "./LandingPage.css"; // Import custom styles if needed
+import "./LandingPage.css";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
-    <div
-      className="landing-page relative w-full h-screen bg-cover bg-center"
-      style={{
-        backgroundImage: "url('https://via.placeholder.com/1920x1080')", // Replace with your actual image
-      }}
-    >
-      {/* Navbar */}
-      <header className="absolute top-0 left-0 w-full p-4 flex justify-between items-center bg-transparent">
-        {/* Logo */}
-        <div className="text-white text-xl font-bold">FinanceQuest</div>
+    <div className="landing-page">
+        <div className="particles">
+        {[...Array(100)].map((_, i) => (
+            <div key={i} className="particle"></div>
+        ))}
+        </div>
 
-        {/* Navigation */}
-        <nav className="space-x-6">
-          <a href="#home" className="text-white text-lg hover:underline">
-            Home
-          </a>
-          <a href="#start" className="text-white text-lg hover:underline">
-            Start Journey
-          </a>
-          <a href="#features" className="text-white text-lg hover:underline">
-            Game Features
-          </a>
-          <a href="/signup" className="text-white text-lg hover:underline">
-            Sign In
-          </a>
-        </nav>
-      </header>
 
-      {/* Main Content */}
-      <main className="flex flex-col items-center justify-center h-full text-center text-white">
-        {/* Main Heading */}
-        <h1 className="text-5xl font-bold mb-4">Master Your Finances, One Decision at a Time</h1>
+      <nav className="navbar">
+        <div className="logo">Finance Quest</div>
+        <ul className="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/start-journey">Start Journey</a></li>
+          <li><a href="/gamefeatures">Game Features</a></li>
+        </ul>
+        <Link to="/signup">
+          <button className="sign-in">Sign In</button>
+        </Link>
+      </nav>
 
-        {/* Sub-Text */}
-        <p className="text-2xl mb-8">
-        Learn to budget, save, and invest through engaging real-life scenarios.
+      <div className="hero-section">
+        <h1 className="hero-title">MASTER YOUR FINANCES, ONE DECISION AT A TIME</h1>
+        <p className="hero-subtitle">
+          Learn to budget, save, and invest through engaging real-life scenarios.
         </p>
+        <Link to="/signup">
+          <button className="sign-in">Sign In</button>
+        </Link>
+      </div>
 
-        {/* Sign-In Button */}
-        <a href="/signup">
-          <button className="px-6 py-3 bg-blue-600 hover:bg-blue-800 text-white rounded-xl text-lg font-semibold">
-            Sign In to Start
-          </button>
-        </a>
-      </main>
+      <div className="help">Help</div>
     </div>
   );
 };
