@@ -120,6 +120,14 @@ const Modal = styled.div`
     color: black; /* Ensure font color is black */
   }
 
+  .note {
+    background-color: #ffeb3b; /* Yellow background */
+    padding: 10px;
+    border: 1px solid #000;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
   button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -135,7 +143,7 @@ const Modal = styled.div`
   }
 `;
 
-const SystemNarration1 = ({ onContinue }) => {
+const SystemNarration2 = ({ onContinue }) => {
   const [showModal, setShowModal] = useState(true);
 
   const handleContinue = () => {
@@ -161,8 +169,8 @@ const SystemNarration1 = ({ onContinue }) => {
           <ModalBackground className="modal-background">
             <Modal className="modal">
               <h2>SYSTEM</h2>
-              <p>Liza is an 18-year-old college freshman living in a rented bed space in Manila. She comes from a middle-class family in the province and has decided to study in the city to pursue better career opportunities. With limited financial support from her family, she must balance work and studies while managing expenses wisely. The story follows her daily choices, focusing on budgeting, relationships, career progression, and financial independence.
-              </p>
+              <p>Visit Liza’s Boarding House.</p>
+              <p className="note">Note: The House is located left at your current location.</p>
               <button onClick={handleContinue}>Continue</button>
             </Modal>
           </ModalBackground>
@@ -172,4 +180,4 @@ const SystemNarration1 = ({ onContinue }) => {
   );
 };
 
-export default SystemNarration1;
+export default SystemNarration2;

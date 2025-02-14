@@ -7,7 +7,9 @@ import Stats from './Stats';
 import Mission from './Mission';
 import { onPointerMove, onMouseClick } from './Interaction/helper';
 import StatsJS from 'stats.js';
+import Quest1 from '../Quest/Quest1/Quest1';
 import './Gameplay.css'; // Import the CSS file
+
 // const backgroundMusic = 'https://res.cloudinary.com/dwp8u82sd/video/upload/v1739117255/music_oxl9oy.mp3'; // URL of the MP3 file
 
 // Global debug mode variable
@@ -143,7 +145,11 @@ const Gameplay = () => {
   const startGame = () => {
     setGameStarted(true);
   };
-  
+
+  const handleQuestComplete = () => {
+    console.log('Quest 1 completed');
+  };
+
   return (
     <div ref={mountRef} className="gameplay-container">
       {!gameStarted && (
@@ -154,6 +160,7 @@ const Gameplay = () => {
       )}
       {gameStarted && (
         <>
+          <Quest1 onComplete={handleQuestComplete} />
           <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 100 }}>
             <Stats health={100} exp={75} level={5} money={1500} />
           </div>

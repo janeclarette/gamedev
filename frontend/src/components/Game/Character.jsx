@@ -54,7 +54,7 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
     character = fbx;
     character.scale.set(1, 1, 1);
     // character.rotation.y = Math.PI * 2; // Rotates 360 degrees
-    character.position.set(-6.599999726980053, 0.5, 32.054316962328315);
+    character.position.set(-6.599999726980053, 0.2, 32.054316962328315);
     vehicleLayer.add(character);
 
     // Log the character's initial rotation
