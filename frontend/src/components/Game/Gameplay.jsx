@@ -9,6 +9,7 @@ import { onPointerMove, onMouseClick } from './Interaction/helper';
 import StatsJS from 'stats.js';
 import Quest1 from '../Quest/Quest1/Quest1';
 import './Gameplay.css'; // Import the CSS file
+import { toggleSystemNarrationModal } from './Interaction/NPC4Interaction';
 
 // const backgroundMusic = 'https://res.cloudinary.com/dwp8u82sd/video/upload/v1739117255/music_oxl9oy.mp3'; // URL of the MP3 file
 
@@ -150,6 +151,7 @@ const Gameplay = () => {
     console.log('Quest 1 completed');
   };
 
+
   return (
     <div ref={mountRef} className="gameplay-container">
       {!gameStarted && (
@@ -160,7 +162,7 @@ const Gameplay = () => {
       )}
       {gameStarted && (
         <>
-          <Quest1 onComplete={handleQuestComplete} />
+          {/* <Quest1 onComplete={handleQuestComplete} /> */}
           <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 100 }}>
             <Stats health={100} exp={75} level={5} money={1500} />
           </div>
@@ -178,6 +180,9 @@ const Gameplay = () => {
               <button onClick={() => setPopupContent(null)}>Close</button>
             </div>
           )}
+          <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: 100 }}>
+            {toggleSystemNarrationModal&& <div className="system-narration">{toggleSystemNarrationModal}</div>}
+          </div>
         </>
       )}
     </div>  
