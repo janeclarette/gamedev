@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import toast from 'react-hot-toast';
 
+
 const supermarketCoordinates = new THREE.Vector3(-4.753375371950036, 0.6999999999999995, -21.946643547283124);
 const proximityThreshold = 5;
 
@@ -389,8 +390,6 @@ lessonOptions.forEach(button => {
     newLessonModal.style.display = 'none';
   });
 });
-
- 
 
   supermarketModal.querySelector('#payButton').addEventListener('click', () => {
     if (cartTotal <= 2000) {

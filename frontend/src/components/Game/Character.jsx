@@ -1,10 +1,9 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import toast from 'react-hot-toast';
 import { initializeBankInteraction, updateBankInteractionButton, handleBankInteractionClick } from './Interaction/BankInteraction';
 import { initializeNPCInteraction, updateNPCInteractionButton, handleNPCInteractionClick, createInteractionButton } from './Interaction/NPCInteraction';
 import { initializeNPC4Interaction, updateNPC4InteractionButton, handleNPC4InteractionClick, createNPC4InteractionButton } from './Interaction/NPC4Interaction';
-import { initializeSupermarketInteraction, updateSupermarketInteractionButton, handleSupermarketInteractionClick } from './Interaction/SupermarketInteraction';
+import { initializeSupermarketInteraction, updateSupermarketInteractionButton, handleSupermarketInteractionClick } from './Interaction/Supermarket/SupermarketInteraction';
 
 const idlePath = 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739077535/Idle_dng8de.fbx';
 const walkPath = 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739094607/Walking_c7lfpe.fbx';
@@ -28,10 +27,10 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
   initializeBankInteraction();
   initializeSupermarketInteraction();
 
-  // Function to calculate distance between two points
-  const calculateDistance = (position1, position2) => {
-    return position1.distanceTo(position2);
-  };
+  // // Function to calculate distance between two points
+  // const calculateDistance = (position1, position2) => {
+  //   return position1.distanceTo(position2);
+  // };
 
   // Function to show/hide the button based on proximity
   const updateInteractionButton = (characterPosition) => {
