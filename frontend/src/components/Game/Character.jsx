@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { initializeBankInteraction, updateBankInteractionButton, handleBankInteractionClick } from './Interaction/BankInteraction';
 import { initializeNPCInteraction, updateNPCInteractionButton, handleNPCInteractionClick, createInteractionButton } from './Interaction/NPCInteraction';
 import { initializeNPC4Interaction, updateNPC4InteractionButton, handleNPC4InteractionClick, createNPC4InteractionButton } from './Interaction/NPC4Interaction';
+import { initializeSupermarketInteraction, updateSupermarketInteractionButton, handleSupermarketInteractionClick } from './Interaction/SupermarketInteraction';
 
 const idlePath = 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739077535/Idle_dng8de.fbx';
 const walkPath = 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739094607/Walking_c7lfpe.fbx';
@@ -25,6 +26,7 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
   initializeNPCInteraction();
   initializeNPC4Interaction();
   initializeBankInteraction();
+  initializeSupermarketInteraction();
 
   // Function to calculate distance between two points
   const calculateDistance = (position1, position2) => {
@@ -39,6 +41,8 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
       // NPC4 interaction button update handled in NPC4Interaction.js
     } else if (updateBankInteractionButton(characterPosition, interactionButton)) {
       // Bank interaction button update handled in BankInteraction.js
+    } else if (updateSupermarketInteractionButton(characterPosition, interactionButton)) {
+      // Supermarket interaction button update handled in SupermarketInteraction.js
     } else {
       interactionButton.style.display = 'none';
       npc4InteractionButton.style.display = 'none';
@@ -51,6 +55,8 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
       handleNPCInteractionClick(interactionButton);
     } else if (interactionButton.innerText === 'Go to Bank') {
       handleBankInteractionClick(interactionButton);
+    } else if (interactionButton.innerText === 'Go to Supermarket') {
+      handleSupermarketInteractionClick(interactionButton);
     }
   });
 
@@ -151,7 +157,7 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
               if (idleAction) idleAction.fadeIn(0.2).play();
             };
           }
-          break;
+          break; 
         default:
           break;
       }
@@ -210,6 +216,7 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
       document.body.removeChild(npc4InteractionButton); // Remove the NPC4 button on cleanup
       document.getElementById('npcModal')?.remove(); // Remove the NPC modal on cleanup
       document.getElementById('npc4Modal')?.remove(); // Remove the NPC4 modal on cleanup
+      document.getElementById('supermarketModal')?.remove(); // Remove the supermarket modal on cleanup
       if (character) {
         vehicleLayer.remove(character);
         character.traverse((child) => {
