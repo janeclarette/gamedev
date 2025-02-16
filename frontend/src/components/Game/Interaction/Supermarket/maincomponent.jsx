@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import {createSupermarketModal, createCongratulatoryModal, showBudgetingLessonModal } from './modals';
 
 
-
 const supermarketCoordinates = new THREE.Vector3(-4.753375371950036, 0.6999999999999995, -21.946643547283124);
 const proximityThreshold = 5;
 

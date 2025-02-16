@@ -5,7 +5,7 @@ import { initializeSupermarketInteraction, updateSupermarketInteractionButton, h
 
 const initInteract_SM = () => {
   initializeSupermarketInteraction();
-  createSupermarketModal();
+  createSupermarketModal()
   createCongratulatoryModal();
   showBudgetingLessonModal();
 };

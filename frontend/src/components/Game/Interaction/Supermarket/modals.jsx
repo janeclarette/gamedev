@@ -1,10 +1,8 @@
 // modals.js
 import toast from 'react-hot-toast';
+import { addCongratulatoryModalListeners, addEventListeners, addConceptModalListeners } from './eventListeners';
 
 
-let cartItems = []; // Track items added to the cart
-// let cartTotal = 0; // Initialize cart total
-let cartTotal = 2000; // Initialize cart total
 
 export const createSupermarketModal = () => {
   const supermarketModal = document.createElement('div');
@@ -24,7 +22,6 @@ export const createSupermarketModal = () => {
   supermarketModal.classList.add('supermarket-modal');
   supermarketModal.innerHTML = `
     <div style="position: relative; z-index: 1; text-align: center; padding: 20px;">
-      <h2 style="color: #FF0000; font-size: 30px; margin-bottom: 20px;">caution: the cost of items must not exceed PHP2000</h2>
       <h2 style="color: #002F6C; font-size: 30px; margin-bottom: 20px;">Supermarket</h2>
       <h3 style="color: #002F6C; font-size: 24px; margin-bottom: 10px;">Needs</h3>
       <div class="product-list">
@@ -111,66 +108,40 @@ export const createSupermarketModal = () => {
   `;
   document.body.appendChild(supermarketModal);
 
-  // Event listeners for supermarket modal buttons
-  supermarketModal.querySelector('#closesupermarketModal').addEventListener('click', () => {
-    supermarketModal.classList.remove('bounce-in');
-    supermarketModal.classList.add('transform-out');
-    setTimeout(() => {
-      supermarketModal.style.display = 'none';
-      supermarketModal.classList.remove('transform-out');
-    }, 500); // Match the transition duration
-  });
+  // Add event listeners
+  addEventListeners(supermarketModal);
 
-  supermarketModal.querySelector('#payButton').addEventListener('click', () => {
-    if (cartTotal <= 2000) {
-      alert(`Total cost: ₱${cartTotal}`);
-      cartTotal = 0;
-      document.getElementById('cartTotal').innerText = cartTotal;
-      createCongratulatoryModal();
-      document.getElementById('congratulatoryModal').style.display = 'block'; // Show the congratulatory modal
+};
 
-      
-    } else {
-      toast.error('Cannot exceed 2000 pesos. Please adjust your cart.');
-    }
-  });
+export const createOverspendModal = () => {
+  const overspendModal = document.createElement('div');
+  overspendModal.id = 'overspendModal';
+  overspendModal.style.position = 'fixed';
+  overspendModal.style.top = '50%';
+  overspendModal.style.left = '50%';
+  overspendModal.style.transform = 'translate(-50%, -50%)';
+  overspendModal.style.width = '50%';
+  overspendModal.style.height = '30%';
+  overspendModal.style.backgroundColor = '#FFFFFF';
+  overspendModal.style.borderRadius = '10px';
+  overspendModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+  overspendModal.style.zIndex = '1000';
+  overspendModal.style.display = 'none';
+  overspendModal.style.textAlign = 'center';
+  overspendModal.style.padding = '20px';
+  overspendModal.innerHTML = `
+    <h2 style="color: #FF0000; font-size: 30px; margin-bottom: 20px;">Warning!</h2>
+    <p style="color: #FF0000; font-size: 20px;">You overspend your budget!</p>
+    <p style="color: #FF0000; font-size: 20px;">Not enough money left for University Expenses!</p>
+    <button id="closeOverspendModal" style="margin-top: 20px; padding: 15px; font-size: 20px; background-color: #C0C0C0; color: #002F6C; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+      Close
+    </button>
+  `;
+  document.body.appendChild(overspendModal);
 
-  // Add "Remove from Cart" button to each product item
-  const productItems = supermarketModal.querySelectorAll('.product-item');
-  productItems.forEach(item => {
-    const removeButton = document.createElement('button');
-    removeButton.innerText = 'Remove from Cart';
-    removeButton.style.marginTop = '10px';
-    removeButton.style.padding = '10px';
-    removeButton.style.fontSize = '16px';
-    removeButton.style.backgroundColor = '#FF6347'; // Tomato color
-    removeButton.style.color = '#FFFFFF';
-    removeButton.style.border = 'none';
-    removeButton.style.borderRadius = '5px';
-    removeButton.style.cursor = 'pointer';
-    removeButton.style.transition = 'background-color 0.3s';
-    removeButton.style.display = 'none'; // Initially hidden
-    removeButton.classList.add('remove-from-cart');
-    item.appendChild(removeButton);
-  });
-
-  // Event listeners for "Add to Cart" buttons
-  const addToCartButtons = supermarketModal.querySelectorAll('.add-to-cart');
-  addToCartButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const price = parseFloat(button.getAttribute('data-price'));
-      const productItem = button.closest('.product-item');
-      addToCart(productItem, price);
-    });
-  });
-
-  // Event listeners for "Remove from Cart" buttons
-  const removeFromCartButtons = supermarketModal.querySelectorAll('.remove-from-cart');
-  removeFromCartButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      const productItem = button.closest('.product-item');
-      removeFromCart(productItem);
-    });
+  // Add event listener to close the modal
+  overspendModal.querySelector('#closeOverspendModal').addEventListener('click', () => {
+    overspendModal.style.display = 'none';
   });
 };
 
@@ -192,22 +163,50 @@ export const createCongratulatoryModal = () => {
   congratulatoryModal.style.padding = '20px';
   congratulatoryModal.innerHTML = `
     <h2 style="color: #002F6C; font-size: 30px; margin-bottom: 20px;">Congratulations!</h2>
-    <p style="color: #002F6C; font-size: 20px;">You have successfully completed your purchase.</p>
+    <p style="color: #002F6C; font-size: 20px;">You have successfully budget wisely.</p>
     <button id="closeCongratulatoryModal" style="margin-top: 20px; padding: 15px; font-size: 20px; background-color: #C0C0C0; color: #002F6C; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
       Close
     </button>
   `;
   document.body.appendChild(congratulatoryModal);
 
-  // Event listener for closing the congratulatory modal
-  congratulatoryModal.querySelector('#closeCongratulatoryModal').addEventListener('click', () => {
-    congratulatoryModal.style.display = 'none';
-    showConceptExplanationModal(); // Show the concept explanation modal
-  });
-  
-  // Hide the supermarket modal when the congratulatory modal is shown
-  document.getElementById('supermarketModal').style.display = 'none';
+ //Add event listeners
+ addCongratulatoryModalListeners(congratulatoryModal);
+};
 
+export const createBudgetingTipModal = () => {
+  const budgetingTipModal = document.createElement('div');
+  budgetingTipModal.id = 'budgetingTipModal';
+  budgetingTipModal.style.position = 'fixed';
+  budgetingTipModal.style.top = '50%';
+  budgetingTipModal.style.left = '50%';
+  budgetingTipModal.style.transform = 'translate(-50%, -50%)';
+  budgetingTipModal.style.width = '60%';
+  budgetingTipModal.style.height = 'auto'; // Adjust height dynamically
+  budgetingTipModal.style.backgroundColor = '#FFFFFF';
+  budgetingTipModal.style.borderRadius = '10px';
+  budgetingTipModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+  budgetingTipModal.style.zIndex = '1000';
+  budgetingTipModal.style.display = 'none';
+  budgetingTipModal.style.textAlign = 'center';
+  budgetingTipModal.style.padding = '20px';
+  budgetingTipModal.innerHTML = `
+    <h2 style="color: #002F6C; font-size: 30px; margin-bottom: 20px;">Free Budgeting Tips</h2>
+    <div style="text-align: left; margin: 20px 0;">
+      <button style="color: #002F6C; font-size: 18px; background: none; border: none; cursor: pointer; text-align: left; width: 100%; padding: 10px 0;">Option 1 - Understanding Fixed vs. Variable Expenses</button><br>
+      <button style="color: #002F6C; font-size: 18px; background: none; border: none; cursor: pointer; text-align: left; width: 100%; padding: 10px 0;">Option 2 - Allocating Funds for Savings, Essentials, and Discretionary Spending</button><br>
+      <button style="color: #002F6C; font-size: 18px; background: none; border: none; cursor: pointer; text-align: left; width: 100%; padding: 10px 0;">Option 3 - Preparing for Future Expenses by Setting a Budget Cap</button>
+    </div>
+    <button id="closeBudgetingTipModal" style="margin-top: 20px; padding: 15px; font-size: 20px; background-color: #FF6347; color: #FFFFFF; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
+      Close
+    </button>
+  `;
+  document.body.appendChild(budgetingTipModal);
+
+  // Add event listener to close the modal
+  budgetingTipModal.querySelector('#closeBudgetingTipModal').addEventListener('click', () => {
+    budgetingTipModal.style.display = 'none';
+  });
 };
 
 export const showConceptExplanationModal = () => {
@@ -229,44 +228,15 @@ export const showConceptExplanationModal = () => {
   conceptModal.innerHTML = `
     <h2 style="color: #002F6C; font-size: 30px; margin-bottom: 20px;">Budgeting Game: Key Concepts</h2>
     <div style="text-align: left; margin: 20px 0;">
-      <h3 style="color: #002F6C; font-size: 24px;">1. Fixed vs. Variable Expenses</h3>
-      <p style="color: #002F6C; font-size: 18px;">
-        <strong>Fixed Expenses</strong> are costs that remain the same every month and are essential for daily life. Examples include:
-        <ul style="color: #002F6C; font-size: 16px;">
-          <li>Rent/Mortgage</li>
-          <li>Tuition Fees</li>
-          <li>Internet/Utilities</li>
-        </ul>
-        <strong>Variable Expenses</strong> fluctuate based on usage and lifestyle. Examples include:
-        <ul style="color: #002F6C; font-size: 16px;">
-          <li>Groceries</li>
-          <li>Transportation</li>
-          <li>Entertainment</li>
-        </ul>
-      </p>
-      <h3 style="color: #002F6C; font-size: 24px; margin-top: 20px;">2. The 50-30-20 Rule</h3>
-      <p style="color: #002F6C; font-size: 18px;">
-        A balanced budget allocates income as follows:
-        <ul style="color: #002F6C; font-size: 16px;">
-          <li><strong>50% Essentials</strong>: Rent, groceries, transportation, utilities.</li>
-          <li><strong>30% Discretionary</strong>: Entertainment, dining out, hobbies.</li>
-          <li><strong>20% Savings</strong>: Emergency funds, future expenses.</li>
-        </ul>
-      </p>
-      <h3 style="color: #002F6C; font-size: 24px; margin-top: 20px;">3. Setting Budget Caps</h3>
-      <p style="color: #002F6C; font-size: 18px;">
-        To avoid overspending, set limits for variable expenses. For example:
-        <ul style="color: #002F6C; font-size: 16px;">
-          <li>Groceries: ₱1,200 per week</li>
-          <li>Transportation: ₱500 per week</li>
-          <li>Entertainment: ₱150 per week</li>
-        </ul>
-      </p>
-      <h3 style="color: #002F6C; font-size: 24px; margin-top: 20px;">How to Play</h3>
-      <p style="color: #002F6C; font-size: 18px;">
-        You will have <strong>5 minutes</strong> to allocate your monthly income of ₱10,000 across fixed expenses, variable expenses, and savings. Follow the 50-30-20 rule to succeed!
-      </p>
-    </div>
+    <p style="color: #002F6C; font-size: 18px;">After Successful Purchasing you're skills will be tested to a practical application of budgeting</p>
+    <p style="color: #002F6C; font-size: 18px;">Budgeting is the process of creating a plan to spend your money. It involves setting limits on your spending and making sure you have enough money to cover your expenses.</p>
+    <p style="color: #002F6C; font-size: 18px;">The 50-30-20 rule is a simple budgeting technique that involves dividing your income into three categories:</p>
+    <p style="color: #002F6C; font-size: 18px;">1. 50% for needs (e.g., rent, utilities, groceries)<br>
+    2. 30% for wants (e.g., dining out, entertainment)<br>
+    3. 20% for savings (e.g., emergency fund, retirement savings)</p>
+    <p style="color: #002F6C; font-size: 18px;">In this game, you will be given a monthly income of ₱10,000. Your goal is to allocate your budget according to the 50-30-20 rule.</p>
+    <p style="color: #002F6C; font-size: 18px;">You will have to balance your fixed expenses (e.g., rent, tuition) and variable expenses (e.g., groceries, transportation) while ensuring that you save at least 20% of your income.</p>
+    <p style="color: #002F6C; font-size: 18px;">You will have 5 minutes to complete the budgeting challenge. Good luck!</p>
     <button id="startGame" style="margin-top: 20px; padding: 15px; font-size: 20px; background-color: #002F6C; color: #FFD700; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.3s;">
       Start Game
     </button>
@@ -276,16 +246,8 @@ export const showConceptExplanationModal = () => {
   `;
   document.body.appendChild(conceptModal);
 
-  // Event listener for closing the modal
-  conceptModal.querySelector('#closeConceptModal').addEventListener('click', () => {
-    conceptModal.style.display = 'none';
-  });
-
-  // Event listener for starting the game
-  conceptModal.querySelector('#startGame').addEventListener('click', () => {
-    conceptModal.style.display = 'none';
-    showBudgetingLessonModal(); // Start the budgeting game
-  });
+//Add event listeners
+addConceptModalListeners(conceptModal);
 };
 
 export const showBudgetingLessonModal = () => {
@@ -362,105 +324,67 @@ export const showBudgetingLessonModal = () => {
     }
   }, 1000);
 
-  // Event listener for closing the modal
-  budgetingModal.querySelector('#closeBudgetModal').addEventListener('click', () => {
-    clearInterval(timerInterval); // Stop the timer
-    budgetingModal.style.display = 'none';
-  });
-
-  // Event listener for submitting the budget
-  budgetingModal.querySelector('#submitBudget').addEventListener('click', () => {
-    clearInterval(timerInterval); // Stop the timer
-
-    // Get the player's inputs
+  // Function to check if the budget is allocated according to the 50-30-20 rule
+  const isBudgetAllocatedCorrectly = () => {
     const groceries = parseFloat(budgetingModal.querySelector('#groceriesInput').value) || 0;
     const transportation = parseFloat(budgetingModal.querySelector('#transportationInput').value) || 0;
     const entertainment = parseFloat(budgetingModal.querySelector('#entertainmentInput').value) || 0;
     const savings = parseFloat(budgetingModal.querySelector('#savingsInput').value) || 0;
 
-    // Fixed expenses
     const fixedExpenses = 4000 + 2000 + 1000; // Rent + Tuition + Internet
-
-    // Total expenses
     const totalExpenses = fixedExpenses + groceries + transportation + entertainment + savings;
 
-    // Check if the budget is balanced
-    if (totalExpenses > 10000) {
-      alert(`You exceeded your monthly income by ₱${totalExpenses - 10000}. Please adjust your budget.`);
-    } else if (totalExpenses < 10000) {
-      alert(`You have ₱${10000 - totalExpenses} left unallocated. Consider adding to your savings or expenses.`);
-    } else {
-      // Check if the player followed the 50-30-20 rule
-      const essentials = fixedExpenses + groceries + transportation;
-      const discretionary = entertainment;
-      const savingsPercentage = (savings / 10000) * 100;
-
-      if (essentials <= 5000 && discretionary <= 3000 && savingsPercentage >= 20) {
-        alert('Congratulations! You successfully balanced your budget and followed the 50-30-20 rule.');
-      } else {
-        alert('You balanced your budget, but you did not follow the 50-30-20 rule. Try again!');
-      }
+    if (totalExpenses !== 10000) {
+      return false;
     }
 
-    // Close the modal
-    budgetingModal.style.display = 'none';
+    const essentials = fixedExpenses + groceries + transportation;
+    const discretionary = entertainment;
+    const savingsPercentage = (savings / 10000) * 100;
+
+    return essentials <= 5000 && discretionary <= 3000 && savingsPercentage >= 20;
+  };
+
+  // Event listener for closing the modal
+  budgetingModal.querySelector('#closeBudgetModal').addEventListener('click', () => {
+    if (isBudgetAllocatedCorrectly()) {
+      clearInterval(timerInterval); // Stop the timer
+      budgetingModal.style.display = 'none';
+    } else {
+      alert('You cannot close the modal until you have allocated your budget according to the 50-30-20 rule.');
+    }
   });
-};
 
-
-
-const addToCart = (productItem, price) => {
-  const quantityElement = productItem.querySelector('.quantity');
-  let quantity = parseInt(quantityElement.innerText);
-
-  if (quantity > 0) {
-    if (cartTotal + price > 2000) {
-      toast.error('Cannot exceed 2000 pesos. Please adjust your cart.');
+  budgetingModal.querySelector('#submitBudget').addEventListener('click', () => {
+    // Get the player's inputs
+    const groceries = parseFloat(budgetingModal.querySelector('#groceriesInput').value) || 0;
+    const transportation = parseFloat(budgetingModal.querySelector('#transportationInput').value) || 0;
+    const entertainment = parseFloat(budgetingModal.querySelector('#entertainmentInput').value) || 0;
+    const savings = parseFloat(budgetingModal.querySelector('#savingsInput').value) || 0;
+  
+    // Fixed expenses
+    const fixedExpenses = 4000 + 2000 + 1000; // Rent + Tuition + Internet
+  
+    // Total expenses
+    const totalExpenses = fixedExpenses + groceries + transportation + entertainment + savings;
+  
+    // Check if the budget is balanced
+    if (totalExpenses !== 10000) {
+      alert(`Your total expenses must equal ₱10,000. You have ₱${10000 - totalExpenses} left to allocate.`);
       return;
     }
-
-    quantity -= 1;
-    quantityElement.innerText = quantity;
-    cartTotal += price;
-    document.getElementById('cartTotal').innerText = cartTotal;
-
-    // Track the item added to the cart
-    cartItems.push({ productItem, price });
-
-    // Show the "Remove from Cart" button
-    const removeButton = productItem.querySelector('.remove-from-cart');
-    removeButton.style.display = 'block';
-
-    toast.success('Item added to cart!');
-  } else {
-    toast.error('Item is out of stock');
-  }
-};
-
-const removeFromCart = (productItem) => {
-  const quantityElement = productItem.querySelector('.quantity');
-  let quantity = parseInt(quantityElement.innerText);
-
-  // Find the last added item of this type in the cart
-  const itemIndex = cartItems.findIndex(item => item.productItem === productItem);
-  if (itemIndex !== -1) {
-    const { price } = cartItems[itemIndex];
-    quantity += 1;
-    quantityElement.innerText = quantity;
-    cartTotal -= price;
-    document.getElementById('cartTotal').innerText = cartTotal;
-
-    // Remove the item from the cart tracking
-    cartItems.splice(itemIndex, 1);
-
-    // Hide the "Remove from Cart" button if no more items of this type are in the cart
-    if (!cartItems.some(item => item.productItem === productItem)) {
-      const removeButton = productItem.querySelector('.remove-from-cart');
-      removeButton.style.display = 'none';
+  
+    // Check if the player followed the 50-30-20 rule
+    const essentials = fixedExpenses + groceries + transportation;
+    const discretionary = entertainment;
+    const savingsPercentage = (savings / 10000) * 100;
+  
+    if (essentials <= 5000 && discretionary <= 3000 && savingsPercentage >= 20) {
+      alert('Congratulations! You successfully balanced your budget and followed the 50-30-20 rule.');
+      clearInterval(timerInterval); // Stop the timer
+      budgetingModal.style.display = 'none'; // Close the modal
+    } else {
+      alert('You balanced your budget, but you did not follow the 50-30-20 rule. Try again!');
     }
-
-    toast.success('Item removed from cart!');
-  } else {
-    toast.error('Item not found in cart');
-  }
+  });
 };

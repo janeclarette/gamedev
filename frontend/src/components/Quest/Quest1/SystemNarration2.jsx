@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
+import PathVisualization from './PathVisualization'; // Import the visualization component
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -145,9 +146,11 @@ const Modal = styled.div`
 
 const SystemNarration2 = ({ onContinue }) => {
   const [showModal, setShowModal] = useState(true);
+  const [showVisualization, setShowVisualization] = useState(false);
 
   const handleContinue = () => {
     setShowModal(false);
+    setShowVisualization(true); // Show the visualization
     onContinue();
   };
 
@@ -161,6 +164,10 @@ const SystemNarration2 = ({ onContinue }) => {
     }
   }, [showModal]);
 
+  // Coordinates
+  const currentPosition = { x: -6.599999726980053, y: 0.6999999999999995, z: 32.054316962328315 };
+  const destination = { x: -9.921986453866225, y: 0.6999999999999995, z: 28.90597052506989 };
+
   return (
     <>
       <GlobalStyle />
@@ -169,15 +176,18 @@ const SystemNarration2 = ({ onContinue }) => {
           <ModalBackground className="modal-background">
             <Modal className="modal">
               <h2>SYSTEM</h2>
-              <p>Visit Liza’s Boarding House.</p>
-              <p className="note">Note: The House is located left at your current location.</p>
+              <p>Go to Boarding House and Talk to the Landlord</p>
               <button onClick={handleContinue}>Continue</button>
             </Modal>
           </ModalBackground>
         </ModalContainer>
+      )}
+      {showVisualization && (
+        <PathVisualization start={currentPosition} destination={destination} />
       )}
     </>
   );
 };
 
 export default SystemNarration2;
+
