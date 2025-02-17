@@ -135,7 +135,7 @@ const Modal = styled.div`
   }
 `;
 
-const SystemNarration1 = ({ onContinue }) => {
+const Narration1 = ({ onContinue }) => {
   const [showModal, setShowModal] = useState(true);
 
   const handleContinue = () => {
@@ -160,9 +160,9 @@ const SystemNarration1 = ({ onContinue }) => {
         <ModalContainer id="modal-container" className="one">
           <ModalBackground className="modal-background">
             <Modal className="modal">
-              <h2>SYSTEM</h2>
-              <p>Liza is an 18-year-old college freshman living in a rented bed space in Manila. She comes from a middle-class family in the province and has decided to study in the city to pursue better career opportunities. With limited financial support from her family, she must balance work and studies while managing expenses wisely. The story follows her daily choices, focusing on budgeting, relationships, career progression, and financial independence.
-              </p>
+              <h2>🎓 Quest 1: Arrival in Manila and First Budgeting Challenge</h2>
+              <p>📍 Location: Liza’s Boarding House</p>
+              <p>System: Liza arrives at her rented space in a modest boarding house in Sampaloc, Manila. She shares the space with other students.</p>
               <button onClick={handleContinue}>Continue</button>
             </Modal>
           </ModalBackground>
@@ -172,4 +172,4 @@ const SystemNarration1 = ({ onContinue }) => {
   );
 };
 
-export default SystemNarration1;
+export default Narration1;

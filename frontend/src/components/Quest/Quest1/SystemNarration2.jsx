@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled, { createGlobalStyle, keyframes } from 'styled-components';
+import PathVisualization from './PathVisualization'; // Import the visualization component
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -120,6 +121,14 @@ const Modal = styled.div`
     color: black; /* Ensure font color is black */
   }
 
+  .note {
+    background-color: #ffeb3b; /* Yellow background */
+    padding: 10px;
+    border: 1px solid #000;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
   button {
     margin-top: 20px;
     padding: 10px 20px;
@@ -135,11 +144,13 @@ const Modal = styled.div`
   }
 `;
 
-const SystemNarration1 = ({ onContinue }) => {
+const SystemNarration2 = ({ onContinue }) => {
   const [showModal, setShowModal] = useState(true);
+  const [showVisualization, setShowVisualization] = useState(false);
 
   const handleContinue = () => {
     setShowModal(false);
+    setShowVisualization(true); // Show the visualization
     onContinue();
   };
 
@@ -153,6 +164,10 @@ const SystemNarration1 = ({ onContinue }) => {
     }
   }, [showModal]);
 
+  // Coordinates
+  const currentPosition = { x: -6.599999726980053, y: 0.6999999999999995, z: 32.054316962328315 };
+  const destination = { x: -9.921986453866225, y: 0.6999999999999995, z: 28.90597052506989 };
+
   return (
     <>
       <GlobalStyle />
@@ -161,15 +176,18 @@ const SystemNarration1 = ({ onContinue }) => {
           <ModalBackground className="modal-background">
             <Modal className="modal">
               <h2>SYSTEM</h2>
-              <p>Liza is an 18-year-old college freshman living in a rented bed space in Manila. She comes from a middle-class family in the province and has decided to study in the city to pursue better career opportunities. With limited financial support from her family, she must balance work and studies while managing expenses wisely. The story follows her daily choices, focusing on budgeting, relationships, career progression, and financial independence.
-              </p>
+              <p>Go to Boarding House and Talk to the Landlord</p>
               <button onClick={handleContinue}>Continue</button>
             </Modal>
           </ModalBackground>
         </ModalContainer>
       )}
+      {showVisualization && (
+        <PathVisualization start={currentPosition} destination={destination} />
+      )}
     </>
   );
 };
 
-export default SystemNarration1;
+export default SystemNarration2;
+

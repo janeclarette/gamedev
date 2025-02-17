@@ -3,6 +3,7 @@ import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { TextureLoader } from 'three';
+import { HouseSignageBrd, SMSignageBrd } from './Signage/Signage'; 
 
 const assets = {
   building_01: 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739077544/building_01_mv5zsp.fbx',
@@ -142,25 +143,6 @@ const loadBuildings = (scene, buildingLayer) => {
           }
         });
       }
-
-      // if (pulseEffect) {
-      //   const initialScale = object.scale.clone();
-      //   const pulseSpeed = 1.5;
-      //   const pulseScale = 1.1;
-
-      //   const pulse = () => {
-      //     const time = clock.getElapsedTime();
-      //     const scaleFactor = 1 + Math.sin(time * pulseSpeed) * (pulseScale - 1);
-      //     object.scale.set(
-      //       initialScale.x * scaleFactor,
-      //       initialScale.y * scaleFactor,
-      //       initialScale.z * scaleFactor
-      //     );
-      //     requestAnimationFrame(pulse);
-      //   };
-      //   pulse();
-      // }
-
       buildingLayer.add(object);
       if (debugMode) console.log(`${path} loaded and added to the scene`);
     }, undefined, (error) => {
@@ -187,6 +169,13 @@ const loadBuildings = (scene, buildingLayer) => {
   layout.forEach(({ type, position, rotation, scale, isFBX, isOBJ, texturePath, highlightEdges, pulseEffect, name }) => {
     loadAsset(assets[type], position, rotation, scale, isFBX, isOBJ, texturePath, highlightEdges, pulseEffect, name);
   });
+
+  // Add the signage board near house1
+  const house_SignageBoard = HouseSignageBrd([-10.8555865215014, 3, 29.082054347187082]);
+  const SM_SignageBoard = SMSignageBrd([-5.095147048233258, 3, -25.112125052567336]);
+  
+  buildingLayer.add(house_SignageBoard);
+  buildingLayer.add(SM_SignageBoard);
 
   scene.add(buildingLayer);
 

@@ -1,8 +1,11 @@
 import * as THREE from 'three';
 import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader';
-import toast from 'react-hot-toast';
 import { initializeBankInteraction, updateBankInteractionButton, handleBankInteractionClick } from './Interaction/BankInteraction';
 import { initializeNPCInteraction, updateNPCInteractionButton, handleNPCInteractionClick, createInteractionButton } from './Interaction/NPCInteraction';
+import { initializeNPC4Interaction, updateNPC4InteractionButton, handleNPC4InteractionClick, createNPC4InteractionButton } from './Interaction/NPC4Interaction';
+
+//SM INTERACTION
+import { initInteract_SM, updInteractBtn_SM, handleInteractClk_SM } from './Interaction/Supermarket/SupermarketInteraction';
 
 const idlePath = 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739077535/Idle_dng8de.fbx';
 const walkPath = 'https://res.cloudinary.com/dwp8u82sd/raw/upload/v1739094607/Walking_c7lfpe.fbx';
@@ -16,28 +19,29 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
   let character, mixer, idleAction, walkAction, jumpAction;
   const clock = new THREE.Clock();
 
-  // Create a button for interaction
+  // Create buttons for interaction
   const interactionButton = createInteractionButton();
+  const npc4InteractionButton = createNPC4InteractionButton();
 
-  // Initialize NPC interaction
+  // Initialize interactions
   initializeNPCInteraction();
-
-  // Initialize bank interaction
+  initializeNPC4Interaction();
   initializeBankInteraction();
-
-  // Function to calculate distance between two points
-  const calculateDistance = (position1, position2) => {
-    return position1.distanceTo(position2);
-  };
+  initInteract_SM(); // Initialize supermarket interaction
 
   // Function to show/hide the button based on proximity
   const updateInteractionButton = (characterPosition) => {
     if (updateNPCInteractionButton(characterPosition, interactionButton)) {
       // NPC interaction button update handled in NPCInteraction.js
+    } else if (updateNPC4InteractionButton(characterPosition, npc4InteractionButton)) {
+      // NPC4 interaction button update handled in NPC4Interaction.js
     } else if (updateBankInteractionButton(characterPosition, interactionButton)) {
       // Bank interaction button update handled in BankInteraction.js
+    } else if (updInteractBtn_SM(characterPosition, interactionButton)) {
+      // Supermarket interaction button update handled in SupermarketInteraction.js
     } else {
       interactionButton.style.display = 'none';
+      npc4InteractionButton.style.display = 'none';
     }
   };
 
@@ -47,14 +51,23 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
       handleNPCInteractionClick(interactionButton);
     } else if (interactionButton.innerText === 'Go to Bank') {
       handleBankInteractionClick(interactionButton);
+    } else if (interactionButton.innerText === 'Go to Supermarket') {
+      handleInteractClk_SM(interactionButton);
+    }
+  });
+
+  npc4InteractionButton.addEventListener('click', () => {
+    if (npc4InteractionButton.innerText === 'Talk to Landlord') {
+      handleNPC4InteractionClick(npc4InteractionButton);
     }
   });
 
   fbxLoader.load(idlePath, (fbx) => {
     character = fbx;
     character.scale.set(1, 1, 1);
-    // character.rotation.y = Math.PI * 2; // Rotates 360 degrees
-    character.position.set(-6.599999726980053, 0.5, 32.054316962328315);
+  
+    character.position.set(-6.599999726980053, 0.2, 32.054316962328315);
+  
     vehicleLayer.add(character);
 
     // Log the character's initial rotation
@@ -141,7 +154,7 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
               if (idleAction) idleAction.fadeIn(0.2).play();
             };
           }
-          break;
+          break; 
         default:
           break;
       }
@@ -197,7 +210,10 @@ const loadCharacter = (vehicleLayer, onLoad, camera) => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
       document.body.removeChild(interactionButton); // Remove the button on cleanup
+      document.body.removeChild(npc4InteractionButton); // Remove the NPC4 button on cleanup
       document.getElementById('npcModal')?.remove(); // Remove the NPC modal on cleanup
+      document.getElementById('npc4Modal')?.remove(); // Remove the NPC4 modal on cleanup
+      document.getElementById('supermarketModal')?.remove(); // Remove the supermarket modal on cleanup
       if (character) {
         vehicleLayer.remove(character);
         character.traverse((child) => {

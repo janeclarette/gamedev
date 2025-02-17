@@ -7,7 +7,10 @@ import Stats from './Stats';
 import Mission from './Mission';
 import { onPointerMove, onMouseClick } from './Interaction/helper';
 import StatsJS from 'stats.js';
+import Quest1 from '../Quest/Quest1/Quest1';
 import './Gameplay.css'; // Import the CSS file
+import { toggleSystemNarrationModal } from './Interaction/NPC4Interaction';
+
 // const backgroundMusic = 'https://res.cloudinary.com/dwp8u82sd/video/upload/v1739117255/music_oxl9oy.mp3'; // URL of the MP3 file
 
 // Global debug mode variable
@@ -143,9 +146,14 @@ const Gameplay = () => {
   const startGame = () => {
     setGameStarted(true);
   };
-  
+
+  const handleQuestComplete = () => {
+    console.log('Quest 1 completed');
+  };
+
+
   return (
-    <div ref={mountRef} className="gameplay-container">
+    <div ref={mountRef} className="gameplay-container" >
       {!gameStarted && (
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 200, backgroundColor: 'white', padding: '20px', border: '1px solid black' }}>
           <h2>Welcome to the Game</h2>
@@ -154,6 +162,7 @@ const Gameplay = () => {
       )}
       {gameStarted && (
         <>
+           <Quest1 onComplete={handleQuestComplete} /> 
           <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 100 }}>
             <Stats health={100} exp={75} level={5} money={1500} />
           </div>
@@ -171,6 +180,9 @@ const Gameplay = () => {
               <button onClick={() => setPopupContent(null)}>Close</button>
             </div>
           )}
+          <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', zIndex: 100 }}>
+            {toggleSystemNarrationModal&& <div className="system-narration">{toggleSystemNarrationModal}</div>}
+          </div>
         </>
       )}
     </div>  

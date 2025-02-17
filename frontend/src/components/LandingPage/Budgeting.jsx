@@ -49,7 +49,7 @@ const BudgetingBlog = () => {
 
       {/* Top Image */}
       <Box sx={{ width: "100%", textAlign: "center", mt:10}}>
-        <img src="/assets/moneyl.jpg" alt="Budgeting Tips" style={{ width: "90%", height: "400px", objectFit: "cover", borderRadius: "100px" }}  />
+        <img src="/assets/ml.jpg" alt="Budgeting Tips" style={{ width: "90%", height: "400px", objectFit: "cover", borderRadius: "100px" }}  />
       </Box>
 
       {/* Main Content Layout */}
