@@ -153,7 +153,7 @@ const Gameplay = () => {
 
 
   return (
-    <div ref={mountRef} className="gameplay-container">
+    <div ref={mountRef} className="gameplay-container" >
       {!gameStarted && (
         <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 200, backgroundColor: 'white', padding: '20px', border: '1px solid black' }}>
           <h2>Welcome to the Game</h2>
@@ -162,7 +162,7 @@ const Gameplay = () => {
       )}
       {gameStarted && (
         <>
-          {/* <Quest1 onComplete={handleQuestComplete} /> */}
+           <Quest1 onComplete={handleQuestComplete} /> 
           <div style={{ position: 'absolute', top: '20px', left: '20px', zIndex: 100 }}>
             <Stats health={100} exp={75} level={5} money={1500} />
           </div>

@@ -29,7 +29,7 @@ const Dashboard = () => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", background: "linear-gradient(180deg, #5e3967, #351742)" }}>
       <AdminNavibar activeSection={activeSection} setActiveSection={setActiveSection} />
       <Box sx={{ width: "100%", ml: 8, mt: 8, p: 3 }}>{renderContent()}</Box>
     </Box>
