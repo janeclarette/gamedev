@@ -81,9 +81,16 @@ const AdminNavbar = ({ activeSection, setActiveSection }) => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", width: "100%" }}>
+    <Box 
+      sx={{ 
+        display: "flex", 
+        flexDirection: "column", 
+        width: "100%",  
+        background: "linear-gradient(180deg, #5e3967, #351742)",
+        }}
+      >
       {/* Navbar */}
-      <AppBar position="fixed" sx={{ backgroundColor: "#1e1e2f", zIndex: 1300 }}>
+      <AppBar position="fixed" sx={{ backgroundColor: "#351742", zIndex: 1300 }}>
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>{activeSection}</Typography>
           <IconButton color="inherit"><Search /></IconButton>
@@ -129,10 +136,10 @@ const AdminNavbar = ({ activeSection, setActiveSection }) => {
               button
               key={index}
               sx={{
-                backgroundColor: activeSection === item.text ? "#3f51b5" : "transparent",
+                backgroundColor: activeSection === item.text ? "#5e3967" : "transparent",
                 borderRadius: "4px",
                 transition: "background-color 0.3s",
-                "&:hover": { backgroundColor: "#2c387e" },
+                "&:hover": { backgroundColor: "#5e3967" },
               }}
               onClick={() => handleItemClick(item.text)}
             >
@@ -148,7 +155,7 @@ const AdminNavbar = ({ activeSection, setActiveSection }) => {
             sx={{
               borderRadius: "4px",
               transition: "background-color 0.3s",
-              "&:hover": { backgroundColor: "#2c387e" },
+              "&:hover": { backgroundColor: "#5e3967" },
             }}
           >
             <ListItemIcon sx={{ color: "white" }}><TableChart /></ListItemIcon>
@@ -163,10 +170,10 @@ const AdminNavbar = ({ activeSection, setActiveSection }) => {
                   key={index}
                   sx={{
                     pl: 4,
-                    backgroundColor: activeSection === item.text ? "#3f51b5" : "transparent",
+                    backgroundColor: activeSection === item.text ? "#5e3967" : "transparent",
                     borderRadius: "4px",
                     transition: "background-color 0.3s",
-                    "&:hover": { backgroundColor: "#2c387e" },
+                    "&:hover": { backgroundColor: "#5e3967" },
                   }}
                   onClick={() => handleItemClick(item.text)}
                 >
@@ -186,7 +193,7 @@ const AdminNavbar = ({ activeSection, setActiveSection }) => {
             color: "#f44336",
             borderRadius: "4px",
             transition: "background-color 0.3s",
-            "&:hover": { backgroundColor: "#ff7961" },
+            "&:hover": { backgroundColor: "#5e3967" },
           }}
           onClick={handleLogoutClick}
         >
@@ -199,14 +206,14 @@ const AdminNavbar = ({ activeSection, setActiveSection }) => {
 
       {/* Logout Confirmation Dialog */}
       <Dialog open={logoutDialogOpen} onClose={handleLogoutCancel}>
-        <DialogTitle sx={{ backgroundColor: "#1e1e2f", color: "white", textAlign: "center" }}>
+        <DialogTitle sx={{ backgroundColor: "#5e3967", color: "white", textAlign: "center" }}>
           Do you want to Log out?
         </DialogTitle>
-        <DialogContent sx={{ backgroundColor: "#1e1e2f", color: "white", textAlign: "center" }}>
+        <DialogContent sx={{ backgroundColor: "#5e3967", color: "white", textAlign: "center" }}>
           <Typography variant="body1">You will be logged out of your account.</Typography>
         </DialogContent>
-        <DialogActions sx={{ backgroundColor: "#1e1e2f", justifyContent: "center" }}>
-          <Button onClick={handleLogoutCancel} sx={{ color: "white", border: "1px solid white", "&:hover": { backgroundColor: "#2c387e" } }}>
+        <DialogActions sx={{ backgroundColor: "#5e3967", justifyContent: "center" }}>
+          <Button onClick={handleLogoutCancel} sx={{ color: "white", border: "1px solid white", "&:hover": { backgroundColor: "#351742" } }}>
             No
           </Button>
           <Button onClick={handleLogoutConfirm} sx={{ color: "#f44336", border: "1px solid #f44336", "&:hover": { backgroundColor: "#ff7961" } }}>
