@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     height: 100%;
     width: 100%;
-    overflow: hidden; /* Remove any overflow */
+    overflow: hidden;
   }
 `;
 
@@ -41,20 +41,65 @@ const StartPageWrapper = styled.div`
   color: white;
   position: relative;
   cursor: pointer;
-  background: linear-gradient(180deg, #451d6b,  #451d6b);
 `;
 
-const BackgroundImage = styled.img`
+const TiledBackground = styled.div`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   z-index: 0;
-  opacity: 0.3;
-  color: black;
-  filter: blur(5px);
+  
+  div {
+    width: 100%;
+    height: 100%;
+    background-color: #331540;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+  }
+
+  /* Hover Gradients Row by Row */
+  div:nth-child(-n + 10):hover {
+    background: linear-gradient(180deg, #331540, #451d6b);
+  }
+
+  div:nth-child(n + 11):nth-child(-n + 20):hover {
+    background: linear-gradient(180deg, #331540, #451d6b);
+  }
+
+  div:nth-child(n + 21):nth-child(-n + 30):hover {
+    background: linear-gradient(180deg, #331540, #451d6b);
+  }
+
+  div:nth-child(n + 31):nth-child(-n + 40):hover {
+    background: linear-gradient(180deg, #451d6b, #8c2fc7);
+  }
+
+  div:nth-child(n + 41):nth-child(-n + 50):hover {
+    background: linear-gradient(180deg, #451d6b, #8c2fc7);
+  }
+
+  div:nth-child(n + 51):nth-child(-n + 60):hover {
+    background: linear-gradient(180deg, #8c2fc7, #00cac9);
+  }
+
+  div:nth-child(n + 61):nth-child(-n + 70):hover {
+    background: linear-gradient(180deg, #8c2fc7, #00cac9);
+  }
+
+  div:nth-child(n + 71):nth-child(-n + 80):hover {
+    background: linear-gradient(180deg, #00cac9, #331540);
+  }
+
+  div:nth-child(n + 81):nth-child(-n + 90):hover {
+    background: linear-gradient(180deg, #00cac9, #331540);
+  }
+
+  div:nth-child(n + 91):nth-child(-n + 100):hover {
+    background: linear-gradient(180deg, #00cac9, #331540);
+  }
 `;
 
 const Content = styled.div`
@@ -69,7 +114,7 @@ const Content = styled.div`
 
 const GameTitle = styled.div`
   margin-top: 40px;
-  font-size: 90px;
+  font-size: 100px;
   text-transform: uppercase;
   animation: ${bounce} 1s infinite alternate;
   background: #451d6b;
@@ -95,7 +140,7 @@ const GameTitle1 = styled.div`
 const Button = styled.button`
   background: transparent;
   border: 2px black;
-  color: ${(props) => (props.selected ? "black" : "white")}; /* Highlight selected button */
+  color: ${(props) => (props.selected ? "black" : "white")};
   font-size: 20px;
   font-family: 'Fraunces', sans-serif;
   margin-top: 25px;
@@ -117,39 +162,9 @@ const Button = styled.button`
   }
 `;
 
-const Arrow = styled.div`
-  position: absolute;
-  top: ${(props) => props.top};
-  right: 500px;
-  z-index: 2;
-  width: 20px;
-  height: 20px;
-  border-left: 3px solid white;
-  border-bottom: 3px solid white;
-  transform: rotate(45deg);
-`;
-
-const MusicIconWrapper = styled.div`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border-radius: 15px;
-  padding: 10px;
-  cursor: pointer;
-  transition: 0.3s;
-`;
-
-const MusicIcon = styled.img`
-  width: 30px;
-  height: 30px;
-  border-radius: 15px;
-`;
-
 const StartPage = () => {
-  const audioRef = useRef(null);
-  const [isMuted, setIsMuted] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0); // Track the selected button
   const navigate = useNavigate();
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const buttons = [
     { label: "START", onClick: () => navigate("/gameplay") },
@@ -159,32 +174,6 @@ const StartPage = () => {
     { label: "HOME", onClick: () => navigate("/") }
   ];
 
-  // Auto-play audio on page load
-  useEffect(() => {
-    if (audioRef.current) {
-      const playAudio = async () => {
-        try {
-          await audioRef.current.play();
-        } catch (err) {
-          console.error("Autoplay prevented: User interaction may be required", err);
-        }
-      };
-
-      playAudio();
-    }
-  }, []);
-
-  const handleMuteToggle = () => {
-    setIsMuted((prevMuted) => {
-      const newMutedStatus = !prevMuted;
-      if (audioRef.current) {
-        audioRef.current.muted = newMutedStatus;
-      }
-      return newMutedStatus;
-    });
-  };
-
-  // Keyboard event listener for arrow keys
   const handleKeyPress = (e) => {
     if (e.key === "ArrowDown") {
       setSelectedIndex((prevIndex) => (prevIndex + 1) % buttons.length);
@@ -206,12 +195,11 @@ const StartPage = () => {
     <>
       <GlobalStyle />
       <StartPageWrapper>
-        <BackgroundImage src="/assets/bg.jpg" alt="Game Background" />
-
-        <audio ref={audioRef} loop>
-          <source src="/assets/quiet.mp3" type="audio/mp3" />
-          Your browser does not support the audio element.
-        </audio>
+        <TiledBackground>
+          {Array.from({ length: 100 }, (_, index) => (
+            <div key={index} />
+          ))}
+        </TiledBackground>
 
         <Content>
           <GameTitle>Finance</GameTitle>
@@ -220,22 +208,13 @@ const StartPage = () => {
           {buttons.map((button, index) => (
             <Button
               key={index}
-              selected={selectedIndex === index} // Highlight selected button
+              selected={selectedIndex === index}
               onClick={button.onClick}
             >
               {button.label}
             </Button>
           ))}
         </Content>
-
-        <Arrow top={`${selectedIndex * 52 + 365}px`} /> {/* Adjust for arrow positioning */}
-
-        <MusicIconWrapper onClick={handleMuteToggle}>
-          <MusicIcon
-            src={isMuted ? "/assets/mute.jpg" : "/assets/music.jpg"}
-            alt={isMuted ? "Mute Icon" : "Unmute Icon"}
-          />
-        </MusicIconWrapper>
       </StartPageWrapper>
     </>
   );

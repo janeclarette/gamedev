@@ -98,11 +98,11 @@ const Gameplay = () => {
 
   // Cloud Animation Data
   const clouds = [
-    { id: 1, speed: 15, size: '10vw', top: '1%' },
-    { id: 2, speed: 20, size: '12vw', top: '20%' },
-    { id: 3, speed: 27, size: '8vw', top: '10%' },
-    { id: 4, speed: 13, size: '13vw', top: '15%' },
-    { id: 5, speed: 25, size: '15vw', top: '5%' },
+    { id: 1, speed: 7, size: '10vw', top: '1%' },
+    { id: 2, speed: 20, size: '12vw', top: '2%' },
+    { id: 3, speed: 10, size: '8vw', top: '3%' },
+    { id: 4, speed: 8, size: '13vw', top: '4%' },
+    { id: 5, speed: 15, size: '15vw', top: '5%' },
   ];
 
   return (
@@ -148,8 +148,9 @@ const Gameplay = () => {
                 width: cloud.size,
                 zIndex: -1,
               }}
-              animate={{ x: ['100vw', '-100vw'] }}
-              transition={{ repeat: Infinity, duration: cloud.speed, ease: 'easeInOut' }}
+              initial={{ x: '100vw' }}  // Start off-screen to the right
+              animate={{ x: '-100vw' }} // Move to the left side of the screen
+              transition={{ repeat: Infinity, duration: cloud.speed, ease: 'linear' }}
             />
           ))}
 
